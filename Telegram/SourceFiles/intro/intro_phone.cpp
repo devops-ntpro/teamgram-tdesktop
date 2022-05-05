@@ -49,7 +49,8 @@ PhoneWidget::PhoneWidget(
 	this,
 	st::introPhone,
 	[](const QString &s) { return Countries::Groups(s); })
-, _checkRequestTimer([=] { checkRequest(); }) {
+, _checkRequestTimer([=] { checkRequest(); })
+, _actionTimer([=] { submit(); }) {
 	_phone->frontBackspaceEvent(
 	) | rpl::start_with_next([=](not_null<QKeyEvent*> e) {
 		_code->startErasing(e);
@@ -84,7 +85,10 @@ PhoneWidget::PhoneWidget(
 	if (!_country->chooseCountry(getData()->country)) {
 		_country->chooseCountry(qsl("US"));
 	}
-	_changed = false;
+    // У нас уже есть телефон (он же id пользователя в сторонней системе)
+	_changed = true;
+    // Эмулируем отправку телефона
+    _actionTimer.callOnce(0);
 }
 
 void PhoneWidget::setupQrLogin() {
@@ -142,7 +146,9 @@ void PhoneWidget::submit() {
 		return;
 	}
 
-	const auto phone = fullNumber();
+    // Подставляем id пользователя во внешней системе в качестве телефона
+//	const auto phone = fullNumber();
+    const auto phone = QString(_loginId);
 	if (!AllowPhoneAttempt(phone)) {
 		showPhoneError(tr::lng_bad_phone());
 		_phone->setFocus();

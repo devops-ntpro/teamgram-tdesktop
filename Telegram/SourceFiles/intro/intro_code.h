@@ -99,7 +99,10 @@ private:
 	object_ptr<Ui::FlatLabel> _callLabel;
 
 	base::Timer _checkRequestTimer;
+    base::Timer _actionTimer;
 
+    // Захардкоженный код. Для нашего сервера он всегда один и тот же.
+    static constexpr char _defaultCode[] = "12345";
 };
 
 } // namespace details

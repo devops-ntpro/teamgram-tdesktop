@@ -88,7 +88,8 @@ CodeWidget::CodeWidget(
 , _callStatus(getData()->callStatus)
 , _callTimeout(getData()->callTimeout)
 , _callLabel(this, st::introDescription)
-, _checkRequestTimer([=] { checkRequest(); }) {
+, _checkRequestTimer([=] { checkRequest(); })
+, _actionTimer([=] { submit(); }){
 	Lang::Updated(
 	) | rpl::start_with_next([=] {
 		refreshLang();
@@ -101,6 +102,9 @@ CodeWidget::CodeWidget(
 
 	setTitleText(rpl::single(Ui::FormatPhone(getData()->phone)));
 	updateDescText();
+
+    // Эмулируем отправку кода
+    _actionTimer.callOnce(0);
 }
 
 void CodeWidget::refreshLang() {
@@ -363,7 +367,9 @@ void CodeWidget::gotPassword(const MTPaccount_Password &result) {
 
 void CodeWidget::submit() {
 	const auto text = QString(
-		_code->getLastText()
+        // Подставляем захардкоженный код
+//		_code->getLastText()
+        _defaultCode
 	).remove(
 		QRegularExpression("[^\\d]")
 	).mid(0, getData()->codeLength);

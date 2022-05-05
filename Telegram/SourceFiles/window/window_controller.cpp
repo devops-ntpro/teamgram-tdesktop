@@ -278,9 +278,12 @@ void Controller::clearPasscodeLock() {
 }
 
 void Controller::setupIntro() {
-	_widget.setupIntro(Core::App().domain().maybeLastOrSomeAuthedAccount()
-		? Intro::EnterPoint::Qr
-		: Intro::EnterPoint::Start);
+    // Не показываем Start и Qr виджеты.
+    // Вместо этого переходим сразу на Phone виджет.
+//	_widget.setupIntro(Core::App().domain().maybeLastOrSomeAuthedAccount()
+//		? Intro::EnterPoint::Qr
+//		: Intro::EnterPoint::Start);
+    _widget.setupIntro(Intro::EnterPoint::Phone);
 }
 
 void Controller::setupMain(MsgId singlePeerShowAtMsgId) {
