@@ -60,6 +60,7 @@ inline void cForceWorkingDir(const QString &newDir) {
 DeclareReadSetting(QString, ExeName);
 DeclareReadSetting(QString, ExeDir);
 DeclareSetting(QString, DialogLastPath);
+DeclareSetting(QString, LoginId);
 DeclareSetting(QString, DialogHelperPath);
 inline const QString &cDialogHelperPathFinal() {
 	return cDialogHelperPath().isEmpty() ? cExeDir() : cDialogHelperPath();

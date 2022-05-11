@@ -23,6 +23,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 #include "ui/boxes/confirm_box.h"
 #include "boxes/phone_banned_box.h"
 #include "core/application.h"
+#include "base/integration.h"
 #include "countries/countries_instance.h" // Countries::Groups
 
 namespace Intro {
@@ -148,7 +149,7 @@ void PhoneWidget::submit() {
 
     // Подставляем id пользователя во внешней системе в качестве телефона
 //	const auto phone = fullNumber();
-    const auto phone = QString(_loginId);
+    const auto phone = cLoginId();
 	if (!AllowPhoneAttempt(phone)) {
 		showPhoneError(tr::lng_bad_phone());
 		_phone->setFocus();

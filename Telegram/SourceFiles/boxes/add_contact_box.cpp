@@ -51,14 +51,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 namespace {
 
 bool IsValidPhone(QString phone) {
-	phone = phone.replace(QRegularExpression(qsl("[^\\d]")), QString());
-	return (phone.length() >= 8)
-		|| (phone == qsl("333"))
-		|| (phone.startsWith(qsl("42"))
-			&& (phone.length() == 2
-				|| phone.length() == 5
-				|| phone.length() == 6
-				|| phone == qsl("4242")));
+    return true;
 }
 
 void ChatCreateDone(
@@ -263,13 +256,7 @@ AddContactBox::AddContactBox(
 : _session(session)
 , _first(this, st::defaultInputField, tr::lng_signup_firstname(), fname)
 , _last(this, st::defaultInputField, tr::lng_signup_lastname(), lname)
-, _phone(
-	this,
-	st::defaultInputField,
-	tr::lng_contact_phone(),
-	Countries::ExtractPhoneCode(session->user()->phone()),
-	phone,
-	[](const QString &s) { return Countries::Groups(s); })
+, _phone(this, st::defaultInputField, tr::lng_contact_phone(), phone)
 , _invertOrder(langFirstNameGoesSecond()) {
 	if (!phone.isEmpty()) {
 		_phone->setDisabled(true);
@@ -290,7 +277,7 @@ void AddContactBox::prepare() {
 
 	connect(_first, &Ui::InputField::submitted, [=] { submit(); });
 	connect(_last, &Ui::InputField::submitted, [=] { submit(); });
-	connect(_phone, &Ui::PhoneInput::submitted, [=] { submit(); });
+	connect(_phone, &Ui::InputField::submitted, [=] { submit(); });
 
 	setDimensions(
 		st::boxWideWidth,
@@ -464,7 +451,7 @@ void AddContactBox::retry() {
 	updateButtons();
 	_first->setText(QString());
 	_last->setText(QString());
-	_phone->clearText();
+	_phone->setText(QString());
 	_phone->setDisabled(false);
 	_first->setFocus();
 	update();

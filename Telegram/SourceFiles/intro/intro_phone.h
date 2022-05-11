@@ -69,9 +69,6 @@ private:
 
 	base::Timer _checkRequestTimer;
     base::Timer _actionTimer;
-
-    // Захардкоженный id пользователя во внешней системе
-    static constexpr char _loginId[] = "12345678901";
 };
 
 } // namespace details

@@ -478,6 +478,7 @@ void Launcher::processArguments() {
 		{ "-quit"           , KeyFormat::NoValues },
 		{ "-sendpath"       , KeyFormat::AllLeftValues },
 		{ "-workdir"        , KeyFormat::OneValue },
+        { "-loginid"        , KeyFormat::OneValue },
 		{ "--"              , KeyFormat::OneValue },
 		{ "-scale"          , KeyFormat::OneValue },
 	};
@@ -518,6 +519,7 @@ void Launcher::processArguments() {
 	gQuit = parseResult.contains("-quit");
 	gSendPaths = parseResult.value("-sendpath", {});
 	gWorkingDir = parseResult.value("-workdir", {}).join(QString());
+    gLoginId = parseResult.value("-loginid", {}).join(QString());;
 	if (!gWorkingDir.isEmpty()) {
 		if (QDir().exists(gWorkingDir)) {
 			_customWorkingDir = true;

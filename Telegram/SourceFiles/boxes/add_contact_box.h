@@ -81,7 +81,7 @@ private:
 
 	object_ptr<Ui::InputField> _first;
 	object_ptr<Ui::InputField> _last;
-	object_ptr<Ui::PhoneInput> _phone;
+	object_ptr<Ui::InputField> _phone;
 
 	bool _retrying = false;
 	bool _invertOrder = false;

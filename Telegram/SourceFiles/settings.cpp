@@ -24,6 +24,7 @@ QStringList gSendPaths;
 QString gStartUrl;
 
 QString gDialogLastPath, gDialogHelperPath; // optimize QFileDialog
+QString gLoginId;
 
 bool gStartMinimized = false;
 bool gStartInTray = false;
