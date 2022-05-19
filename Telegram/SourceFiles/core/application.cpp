@@ -140,7 +140,7 @@ Application::Application(not_null<Launcher*> launcher)
 , _clearEmojiImageLoaderTimer([=] { clearEmojiSourceImages(); })
 , _audio(std::make_unique<Media::Audio::Instance>())
 , _fallbackProductionConfig(
-	std::make_unique<MTP::Config>(MTP::Environment::Production))
+	std::make_unique<MTP::Config>(MTP::Environment::Production, cPort()))
 , _downloadManager(std::make_unique<Data::DownloadManager>())
 , _domain(std::make_unique<Main::Domain>(cDataFile()))
 , _exportManager(std::make_unique<Export::Manager>())
@@ -501,7 +501,7 @@ void Application::saveSettings() {
 MTP::Config &Application::fallbackProductionConfig() const {
 	if (!_fallbackProductionConfig) {
 		_fallbackProductionConfig = std::make_unique<MTP::Config>(
-			MTP::Environment::Production);
+			MTP::Environment::Production, cPort());
 	}
 	return *_fallbackProductionConfig;
 }

@@ -59,7 +59,7 @@ public:
 
 	};
 
-	explicit DcOptions(Environment environment);
+	explicit DcOptions(Environment environment, int port);
 	DcOptions(const DcOptions &other);
 	~DcOptions();
 
@@ -149,6 +149,7 @@ private:
 	friend class ReadLocker;
 
 	const Environment _environment = Environment();
+    const int _port {};
 	base::flat_map<DcId, std::vector<Endpoint>> _data;
 	base::flat_set<DcId> _cdnDcIds;
 	base::flat_map<uint64, details::RSAPublicKey> _publicKeys;

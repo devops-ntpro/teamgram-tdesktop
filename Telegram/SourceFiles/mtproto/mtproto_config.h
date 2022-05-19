@@ -48,7 +48,7 @@ class Config final {
 	};
 
 public:
-	explicit Config(Environment environment);
+	explicit Config(Environment environment, int port);
 	Config(const Config &other);
 
 	[[nodiscard]] QByteArray serialize() const;
