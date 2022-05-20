@@ -298,14 +298,18 @@ TabbedSelector::TabbedSelector(
 , _tabs([&] {
 	std::vector<Tab> tabs;
 	if (full()) {
-		tabs.reserve(3);
-		tabs.push_back(createTab(SelectorTab::Emoji, 0));
-		tabs.push_back(createTab(SelectorTab::Stickers, 1));
-		tabs.push_back(createTab(SelectorTab::Gifs, 2));
+        /// FRONT-BLOCK Stickers
+        /// FRONT-BLOCK Gifs
+        tabs.reserve(1);
+        tabs.push_back(createTab(SelectorTab::Emoji, 0));
+		//tabs.push_back(createTab(SelectorTab::Stickers, 1));
+		//tabs.push_back(createTab(SelectorTab::Gifs, 2));
 	} else if (mediaEditor()) {
-		tabs.reserve(2);
-		tabs.push_back(createTab(SelectorTab::Stickers, 0));
-		tabs.push_back(createTab(SelectorTab::Masks, 1));
+        /// FRONT-BLOCK Stickers
+        /// FRONT-BLOCK Masks
+		tabs.reserve(0);
+		//tabs.push_back(createTab(SelectorTab::Stickers, 0));
+		//tabs.push_back(createTab(SelectorTab::Masks, 1));
 	} else {
 		tabs.reserve(1);
 		tabs.push_back(createTab(SelectorTab::Emoji, 0));
@@ -417,12 +421,15 @@ TabbedSelector::Tab TabbedSelector::createTab(SelectorTab type, int index) {
 		switch (type) {
 		case SelectorTab::Emoji:
 			return object_ptr<EmojiListWidget>(this, _controller);
-		case SelectorTab::Stickers:
-			return object_ptr<StickersListWidget>(this, _controller);
-		case SelectorTab::Gifs:
-			return object_ptr<GifsListWidget>(this, _controller);
-		case SelectorTab::Masks:
-			return object_ptr<StickersListWidget>(this, _controller, true);
+        /// FRONT-BLOCK Stickers
+        /// FRONT-BLOCK Gifs
+        /// FRONT-BLOCK Masks
+		//case SelectorTab::Stickers:
+		//	return object_ptr<StickersListWidget>(this, _controller);
+		//case SelectorTab::Gifs:
+		//	return object_ptr<GifsListWidget>(this, _controller);
+		//case SelectorTab::Masks:
+		//	return object_ptr<StickersListWidget>(this, _controller, true);
 		}
 		Unexpected("Type in TabbedSelector::createTab.");
 	};

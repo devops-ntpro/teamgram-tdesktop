@@ -1300,7 +1300,7 @@ void Application::RegisterUrlScheme() {
 		.executable = cExeDir() + cExeName(),
 		.arguments = qsl("-workdir \"%1\"").arg(cWorkingDir()),
 		.protocol = qsl("tg"),
-		.protocolName = qsl("Teamgram Link"),
+		.protocolName = qsl("Chat Link"),
 		.shortAppName = qsl("tdesktop"),
 		.longAppName = QCoreApplication::applicationName(),
 		.displayAppName = AppName.utf16(),

@@ -868,7 +868,7 @@ void Notification::updateNotifyDisplay() {
 		p.setPen(st::dialogsNameFg);
 		Ui::Text::String titleText;
 		const auto title = options.hideNameAndPhoto
-			? qsl("Teamgram Desktop")
+			? qsl("Chat Desktop")
 			: reminder
 			? tr::lng_notification_reminder(tr::now)
 			: _history->peer->nameText().toString();

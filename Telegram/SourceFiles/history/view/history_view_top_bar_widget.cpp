@@ -64,6 +64,9 @@ namespace {
 constexpr auto kEmojiInteractionSeenDuration = 3 * crl::time(1000);
 
 inline bool HasGroupCallMenu(const not_null<PeerData*> &peer) {
+    /// FRONT-BLOCK Calls
+    return false;
+
 	return !peer->groupCall()
 		&& ((peer->isChannel() && peer->asChannel()->amCreator())
 			|| (peer->isChat() && peer->asChat()->amCreator()));
@@ -110,8 +113,11 @@ TopBarWidget::TopBarWidget(
 	_delete->setClickedCallback([=] { _deleteSelection.fire({}); });
 	_delete->setWidthChangedCallback([=] { updateControlsGeometry(); });
 	_clear->setClickedCallback([=] { _clearSelection.fire({}); });
-	_call->setClickedCallback([=] { call(); });
-	_groupCall->setClickedCallback([=] { groupCall(); });
+    /// FRONT-BLOCK Calls
+    _call->setVisible(false);
+    _groupCall->setVisible(false);
+    //_call->setClickedCallback([=] { call(); });
+	//_groupCall->setClickedCallback([=] { groupCall(); });
 	_search->setClickedCallback([=] { search(); });
 	_menuToggle->setClickedCallback([=] { showPeerMenu(); });
 	_infoToggle->setClickedCallback([=] { toggleInfoSection(); });
@@ -245,6 +251,9 @@ void TopBarWidget::call() {
 }
 
 void TopBarWidget::groupCall() {
+    /// FRONT-BLOCK Calls
+    return;
+
 	if (const auto peer = _activeChat.key.peer()) {
 		if (HasGroupCallMenu(peer)) {
 			showGroupCallMenu(peer);
@@ -336,6 +345,9 @@ void TopBarWidget::showPeerMenu() {
 }
 
 void TopBarWidget::showGroupCallMenu(not_null<PeerData*> peer) {
+    /// FRONT-BLOCK Calls
+    return;
+
 	const auto created = createMenu(_groupCall);
 	if (!created) {
 		return;
@@ -363,13 +375,14 @@ void TopBarWidget::showGroupCallMenu(not_null<PeerData*> peer) {
 			: tr::lng_menu_start_group_call_with(tr::now),
 		[=] { callback({ .rtmpNeeded = true }); },
 		&st::menuIconStartStreamWith);
-	_menu->moveToRight(
-		(parentWidget()->width() - width())
-			+ (width()
-				- _groupCall->x()
-				- _groupCall->width()
-				- st::topBarMenuGroupCallSkip),
-		st::topBarMenuPosition.y());
+    /// FRONT-BLOCK Calls
+	//_menu->moveToRight(
+	//	(parentWidget()->width() - width())
+	//		+ (width()
+	//			- _groupCall->x()
+	//			- _groupCall->width()
+	//			- st::topBarMenuGroupCallSkip),
+	//	st::topBarMenuPosition.y());
 	_menu->showAnimated(Ui::PanelAnimation::Origin::TopRight);
 }
 
@@ -885,11 +898,12 @@ void TopBarWidget::updateControlsGeometry() {
 		_infoToggle->moveToRight(_rightTaken, otherButtonsTop);
 		_rightTaken += _infoToggle->width();
 	}
-	if (!_call->isHidden() || !_groupCall->isHidden()) {
-		_call->moveToRight(_rightTaken, otherButtonsTop);
-		_groupCall->moveToRight(_rightTaken, otherButtonsTop);
-		_rightTaken += _call->width();
-	}
+    /// FRONT-BLOCK Calls
+	//if (!_call->isHidden() || !_groupCall->isHidden()) {
+	//	_call->moveToRight(_rightTaken, otherButtonsTop);
+	//	_groupCall->moveToRight(_rightTaken, otherButtonsTop);
+	//	_rightTaken += _call->width();
+	//}
 	_search->moveToRight(_rightTaken, otherButtonsTop);
 	_rightTaken += _search->width() + st::topBarCallSkip;
 
@@ -957,23 +971,24 @@ void TopBarWidget::updateControlsVisibility() {
 		}
 		return false;
 	}();
-	_call->setVisible(historyMode
-		&& callsEnabled
-		&& !_chooseForReportReason);
-	const auto groupCallsEnabled = [&] {
-		if (const auto peer = _activeChat.key.peer()) {
-			if (peer->canManageGroupCall()) {
-				return true;
-			} else if (const auto call = peer->groupCall()) {
-				return (call->fullCount() == 0);
-			}
-			return false;
-		}
-		return false;
-	}();
-	_groupCall->setVisible(historyMode
-		&& groupCallsEnabled
-		&& !_chooseForReportReason);
+    /// FRONT-BLOCK Calls
+	//_call->setVisible(historyMode
+	//	&& callsEnabled
+	//	&& !_chooseForReportReason);
+	//const auto groupCallsEnabled = [&] {
+	//	if (const auto peer = _activeChat.key.peer()) {
+	//		if (peer->canManageGroupCall()) {
+	//			return true;
+	//		} else if (const auto call = peer->groupCall()) {
+	//			return (call->fullCount() == 0);
+	//		}
+	//		return false;
+	//	}
+	//	return false;
+	//}();
+	//_groupCall->setVisible(historyMode
+	//	&& groupCallsEnabled
+	//	&& !_chooseForReportReason);
 
 	if (_membersShowArea) {
 		_membersShowArea->setVisible(!_chooseForReportReason);

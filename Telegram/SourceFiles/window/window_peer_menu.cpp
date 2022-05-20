@@ -703,10 +703,12 @@ void Filler::addCreatePoll() {
 			source,
 			sendMenuType);
 	};
-	_addAction(
-		tr::lng_polls_create(tr::now),
-		std::move(callback),
-		&st::menuIconCreatePoll);
+
+    /// FRONT-BLOCK Polls
+	//_addAction(
+	//	tr::lng_polls_create(tr::now),
+	//	std::move(callback),
+	//	&st::menuIconCreatePoll);
 }
 
 void Filler::addThemeEdit() {
@@ -762,9 +764,11 @@ void Filler::fillHistoryActions() {
 	addSupportInfo();
 	addManageChat();
 	addCreatePoll();
-	addThemeEdit();
+    /// FRONT-BLOCK Themes
+	//addThemeEdit();
 	addViewDiscussion();
-	addExportChat();
+    /// FRONT-BLOCK Export
+	//addExportChat();
 	addReport();
 	addClearHistory();
 	addDeleteChat();
@@ -780,7 +784,8 @@ void Filler::fillProfileActions() {
 	addNewMembers();
 	addManageChat();
 	addViewDiscussion();
-	addExportChat();
+    /// FRONT-BLOCK Export
+	//addExportChat();
 	addBlockUser();
 	addReport();
 	addLeaveChat();

@@ -335,10 +335,12 @@ HistoryWidget::HistoryWidget(
 
 	initTabbedSelector();
 
-	_attachToggle->addClickHandler(App::LambdaDelayed(
-		st::historyAttach.ripple.hideDuration,
-		this,
-		[=] { chooseAttach(); }));
+    /// FRONT-BLOCK Attachments
+    _attachToggle->setVisible(false);
+	//_attachToggle->addClickHandler(App::LambdaDelayed(
+	//	st::historyAttach.ripple.hideDuration,
+	//	this,
+	//	[=] { chooseAttach(); }));
 
 	_highlightTimer.setCallback([this] { updateHighlightedMessage(); });
 
@@ -471,7 +473,8 @@ HistoryWidget::HistoryWidget(
 
 	initVoiceRecordBar();
 
-	_attachToggle->hide();
+    /// FRONT-BLOCK Attachments
+	//_attachToggle->hide();
 	_tabbedSelectorToggle->hide();
 	_botKeyboardShow->hide();
 	_botKeyboardHide->hide();
@@ -2622,7 +2625,8 @@ void HistoryWidget::updateControlsVisibility() {
 		}
 		_kbScroll->hide();
 		_fieldBarCancel->hide();
-		_attachToggle->hide();
+        /// FRONT-BLOCK Attachments
+		//_attachToggle->hide();
 		_tabbedSelectorToggle->hide();
 		_botKeyboardShow->hide();
 		_botKeyboardHide->hide();
@@ -2676,7 +2680,8 @@ void HistoryWidget::updateControlsVisibility() {
 				_botCommandStart->setVisible(_cmdStartShown);
 			}
 		}
-		_attachToggle->show();
+        /// FRONT-BLOCK Attachments
+		//_attachToggle->show();
 		if (_silent) {
 			_silent->show();
 		}
@@ -2711,7 +2716,8 @@ void HistoryWidget::updateControlsVisibility() {
 		_joinChannel->hide();
 		_muteUnmute->hide();
 		_reportMessages->hide();
-		_attachToggle->hide();
+        /// FRONT-BLOCK Attachments
+		//_attachToggle->hide();
 		if (_silent) {
 			_silent->hide();
 		}

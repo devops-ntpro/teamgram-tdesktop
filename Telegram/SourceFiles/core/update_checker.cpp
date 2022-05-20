@@ -1672,7 +1672,7 @@ QString countAlphaVersionSignature(uint64 version) { // duplicated in packer.cpp
 		return QString();
 	}
 
-	QByteArray signedData = (qstr("TeamgramBeta_") + QString::number(version, 16).toLower()).toUtf8();
+	QByteArray signedData = (qstr("ChatBeta_") + QString::number(version, 16).toLower()).toUtf8();
 
 	static const int32 shaSize = 20, keySize = 128;
 

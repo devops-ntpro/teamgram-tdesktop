@@ -25,11 +25,11 @@ const PROPERTYKEY pkey_AppUserModel_StartPinOption = { { 0x9F4C2855, 0x9F79, 0x4
 const PROPERTYKEY pkey_AppUserModel_ToastActivator = { { 0x9F4C2855, 0x9F79, 0x4B39, { 0xA8, 0xD0, 0xE1, 0xD4, 0x2D, 0xE1, 0xD5, 0xF3 } }, 26 };
 
 #ifdef OS_WIN_STORE
-const WCHAR AppUserModelIdRelease[] = L"Teamgram.TeamgramDesktop.Store";
-#else // OS_WIN_STORE
-const WCHAR AppUserModelIdRelease[] = L"Teamgram.TeamgramDesktop";
+const WCHAR AppUserModelIdRelease[] = L"Chat.ChatDesktop.Store";
+#else // OS_WIN_STOREr
+const WCHAR AppUserModelIdRelease[] = L"Chat.ChatDesktop";
 #endif // OS_WIN_STORE
-const WCHAR AppUserModelIdAlpha[] = L"Teamgram.TeamgramDesktop.Alpha";
+const WCHAR AppUserModelIdAlpha[] = L"Chat.TeamgramDesktop.Alpha";
 
 } // namespace
 
@@ -188,7 +188,7 @@ QString systemShortcutPath() {
 void cleanupShortcut() {
 	static const int maxFileLen = MAX_PATH * 10;
 
-	QString path = systemShortcutPath() + qsl("Teamgram.lnk");
+	QString path = systemShortcutPath() + qsl("Chat.lnk");
 	std::wstring p = QDir::toNativeSeparators(path).toStdWString();
 
 	DWORD attributes = GetFileAttributes(p.c_str());
@@ -316,19 +316,19 @@ bool validateShortcut() {
 	}
 
 	if (cAlphaVersion()) {
-		path += u"TeamgramAlpha.lnk"_q;
+		path += u"ChatAlpha.lnk"_q;
 		if (validateShortcutAt(path)) {
 			return true;
 		}
 	} else {
-		const auto installed = u"Teamgram Desktop/Teamgram.lnk"_q;
-		const auto old = u"Teamgram Win (Unofficial)/Teamgram.lnk"_q;
+		const auto installed = u"Chat Desktop/Chat.lnk"_q;
+		const auto old = u"Chat Win (Unofficial)/Chat.lnk"_q;
 		if (validateShortcutAt(path + installed)
 			|| validateShortcutAt(path + old)) {
 			return true;
 		}
 
-		path += u"Teamgram.lnk"_q;
+		path += u"Chat.lnk"_q;
 		if (validateShortcutAt(path)) {
 			return true;
 		}

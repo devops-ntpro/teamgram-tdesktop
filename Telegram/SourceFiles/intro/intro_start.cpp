@@ -24,7 +24,7 @@ StartWidget::StartWidget(
 	not_null<Data*> data)
 : Step(parent, account, data, true) {
 	setMouseTracking(true);
-	setTitleText(rpl::single(qsl("Teamgram Desktop")));
+	setTitleText(rpl::single(qsl("Chat Desktop")));
 	setDescriptionText(tr::lng_intro_about());
 	show();
 }

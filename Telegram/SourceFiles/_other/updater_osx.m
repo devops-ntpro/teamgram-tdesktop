@@ -8,7 +8,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 #import <Cocoa/Cocoa.h>
 #include <sys/xattr.h>
 
-NSString *appName = @"Teamgram.app";
+NSString *appName = @"Chat.app";
 NSString *appDir = nil;
 NSString *workDir = nil;
 
@@ -165,7 +165,7 @@ int main(int argc, const char * argv[]) {
 
 		// Take the Updater (this currently running binary) from the place where it was placed by Telegram
 		// and copy it to the folder with the new version of the app (ready),
-		// so it won't be deleted when we will clear the "Teamgram.app/Contents" folder.
+		// so it won't be deleted when we will clear the "Chat.app/Contents" folder.
 		NSString *oldVersionUpdaterPath = [appDirFull stringByAppendingString: @"/Contents/Frameworks/Updater" ];
 		NSString *newVersionUpdaterPath = [srcEnum stringByAppendingString:[[NSArray arrayWithObjects:@"/", appName, @"/Contents/Frameworks/Updater", nil] componentsJoinedByString:@""]];
 		writeLog([[NSArray arrayWithObjects: @"Copying Updater from old path ", oldVersionUpdaterPath, @" to new path ", newVersionUpdaterPath, nil] componentsJoinedByString:@""]);

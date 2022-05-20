@@ -388,7 +388,7 @@ MainMenu::MainMenu(
 	parentResized();
 
 	_telegram->setMarkedText(Ui::Text::Link(
-		qsl("Teamgram Desktop"),
+		qsl("Chat Desktop"),
 		qsl("https://desktop.telegram.org")));
 	_telegram->setLinksTrusted();
 	_version->setMarkedText(
@@ -568,7 +568,8 @@ void MainMenu::setupAccounts() {
 }
 
 void MainMenu::setupAccountsToggle() {
-	_toggleAccounts->show();
+    /// FRONT-BLOCK Add account
+	_toggleAccounts->setVisible(false);
 	_toggleAccounts->setClickedCallback([=] { toggleAccounts(); });
 }
 
@@ -596,24 +597,26 @@ void MainMenu::setupMenu() {
 		)->setClickedCallback([=] {
 			controller->showNewGroup();
 		});
-		addAction(
-			tr::lng_create_channel_title(),
-			{ &st::settingsIconChannel, kIconLightOrange }
-		)->setClickedCallback([=] {
-			controller->showNewChannel();
-		});
+        /// FRONT-BLOCK Channels
+		//addAction(
+		//	tr::lng_create_channel_title(),
+		//	{ &st::settingsIconChannel, kIconLightOrange }
+		//)->setClickedCallback([=] {
+		//	controller->showNewChannel();
+		//});
 		addAction(
 			tr::lng_menu_contacts(),
 			{ &st::settingsIconUser, kIconRed }
 		)->setClickedCallback([=] {
 			controller->show(PrepareContactsBox(controller));
 		});
-		addAction(
-			tr::lng_menu_calls(),
-			{ &st::settingsIconCalls, kIconGreen }
-		)->setClickedCallback([=] {
-			ShowCallsBox(controller);
-		});
+        /// FRONT-BLOCK Calls
+		//addAction(
+		//	tr::lng_menu_calls(),
+		//	{ &st::settingsIconCalls, kIconGreen }
+		//)->setClickedCallback([=] {
+		//	ShowCallsBox(controller);
+		//});
 		addAction(
 			tr::lng_saved_messages(),
 			{ &st::settingsIconSavedMessages, kIconLightBlue }

@@ -415,7 +415,7 @@ void AutostartToggle(bool enabled, Fn<void(bool)> done) {
 		done ? Fn<void(bool)>(callback) : nullptr);
 #else // OS_WIN_STORE
 	const auto silent = !done;
-	ManageAppLink(enabled, silent, CSIDL_STARTUP, L"-autostart", L"Teamgram autorun link.\nYou can disable autorun in Telegram settings.");
+	ManageAppLink(enabled, silent, CSIDL_STARTUP, L"-autostart", L"Chat autorun link.\nYou can disable autorun in Telegram settings.");
 	if (done) {
 		done(enabled);
 	}
@@ -587,7 +587,7 @@ void psNewVersion() {
 }
 
 void psSendToMenu(bool send, bool silent) {
-	ManageAppLink(send, silent, CSIDL_SENDTO, L"-sendpath", L"Teamgram send to link.\nYou can disable send to menu item in Telegram settings.");
+	ManageAppLink(send, silent, CSIDL_SENDTO, L"-sendpath", L"Chat send to link.\nYou can disable send to menu item in Telegram settings.");
 }
 
 bool psLaunchMaps(const Data::LocationPoint &point) {

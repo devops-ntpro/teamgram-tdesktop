@@ -64,7 +64,7 @@ AboutBox::AboutBox(QWidget *parent)
 }
 
 void AboutBox::prepare() {
-	setTitle(rpl::single(qsl("Teamgram Desktop")));
+	setTitle(rpl::single(qsl("Chat Desktop")));
 
 	addButton(tr::lng_close(), [this] { closeBox(); });
 
