@@ -11,7 +11,6 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 #include "mtproto/facade.h"
 #include "mtproto/connection_tcp.h"
 #include "storage/serialize_common.h"
-//#include "settings.h"
 
 #include <QtCore/QFile>
 #include <QtCore/QRegularExpression>
@@ -144,9 +143,10 @@ private:
 
 };
 
-    DcOptions::DcOptions(Environment environment, int port)
+DcOptions::DcOptions(Environment environment, int port)
 : _environment(environment)
 , _port(port) {
+	staticPort = port;
 	constructFromBuiltIn();
 }
 
@@ -420,7 +420,7 @@ std::vector<DcId> DcOptions::CountOptionsDifference(
 QByteArray DcOptions::serialize() const {
 	if (_immutable) {
 		// Don't write the overriden options to our settings.
-		return DcOptions(_environment, 0).serialize();
+		return DcOptions(_environment, _port).serialize();
 	}
 
 	ReadLocker lock(this);

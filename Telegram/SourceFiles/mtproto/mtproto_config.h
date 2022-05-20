@@ -48,6 +48,7 @@ class Config final {
 	};
 
 public:
+	Config() = delete;
 	explicit Config(Environment environment, int port);
 	Config(const Config &other);
 
@@ -82,6 +83,7 @@ public:
 	void setTxtDomainString(const QString &value);
 
 private:
+	static inline int staticPort = 0;
 	DcOptions _dcOptions;
 	ConfigFields _fields;
 

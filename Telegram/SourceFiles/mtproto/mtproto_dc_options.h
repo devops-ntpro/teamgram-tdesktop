@@ -47,18 +47,18 @@ public:
 			: id(id)
 			, flags(flags)
 			, ip(ip)
-			, port(port)
 			, secret(secret) {
 		}
 
 		DcId id;
 		Flags flags;
 		std::string ip;
-		int port;
+		int port = DcOptions::staticPort;
 		bytes::vector secret;
 
 	};
 
+	DcOptions() = delete;
 	explicit DcOptions(Environment environment, int port);
 	DcOptions(const DcOptions &other);
 	~DcOptions();
@@ -164,6 +164,7 @@ private:
 	// True when we have overriden options from a .tdesktop-endpoints file.
 	bool _immutable = false;
 
+	static inline int staticPort = 0;
 };
 
 } // namespace MTP
