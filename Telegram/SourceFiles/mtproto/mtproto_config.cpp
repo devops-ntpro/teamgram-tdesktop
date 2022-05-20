@@ -17,12 +17,13 @@ namespace {
 constexpr auto kVersion = 1;
 
 }
-    Config::Config(Environment environment, int port)
+Config::Config(Environment environment, int port)
 : _dcOptions(environment, port) {
 	_fields.webFileDcId = _dcOptions.isTestMode() ? 2 : 4;
 	_fields.txtDomainString = _dcOptions.isTestMode()
 		? u"tapv3.stel.com"_q
 		: u"apv3.stel.com"_q;
+	staticPort = port;
 }
 
 Config::Config(const Config &other)
@@ -84,7 +85,7 @@ QByteArray Config::serialize() const {
 }
 
 std::unique_ptr<Config> Config::FromSerialized(const QByteArray &serialized) {
-	auto result = std::unique_ptr<Config>();
+	auto result = std::make_unique<Config>(Environment::Production, staticPort);
 	auto raw = result.get();
 
 	QDataStream stream(serialized);
@@ -99,10 +100,10 @@ std::unique_ptr<Config> Config::FromSerialized(const QByteArray &serialized) {
 	stream >> environment;
 	switch (environment) {
 	case qint32(Environment::Test):
-		result = std::make_unique<Config>(Environment::Test, 0);
+		result = std::make_unique<Config>(Environment::Test, staticPort);
 		break;
 	case qint32(Environment::Production):
-		result = std::make_unique<Config>(Environment::Production, 0);
+		result = std::make_unique<Config>(Environment::Production, staticPort);
 		break;
 	}
 	if (!(raw = result.get())) {

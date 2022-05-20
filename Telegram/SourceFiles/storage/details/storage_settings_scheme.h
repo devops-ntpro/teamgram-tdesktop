@@ -32,7 +32,7 @@ struct ReadSettingsContext {
 
 	// Those fields are written in ReadSetting.
 	MTP::DcOptions fallbackConfigLegacyDcOptions
-    = MTP::DcOptions(MTP::Environment::Production, cPort());
+    	= MTP::DcOptions(MTP::Environment::Production, cPort());
 	qint32 fallbackConfigLegacyChatSizeMax = 0;
 	qint32 fallbackConfigLegacySavedGifsLimit = 0;
 	qint32 fallbackConfigLegacyStickersRecentLimit = 0;
