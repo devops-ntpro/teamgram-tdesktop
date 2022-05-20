@@ -257,7 +257,7 @@ not_null<Main::Account*> Domain::add(MTP::Environment environment) {
 		}
 		return (environment == MTP::Environment::Production)
 			? cloneConfig(Core::App().fallbackProductionConfig())
-			: std::make_unique<MTP::Config>(environment);
+			: std::make_unique<MTP::Config>(environment, cPort());
 	}();
 	auto index = 0;
 	while (ranges::contains(_accounts, index, &AccountWithIndex::index)) {

@@ -11,6 +11,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 #include "mtproto/facade.h"
 #include "mtproto/connection_tcp.h"
 #include "storage/serialize_common.h"
+//#include "settings.h"
 
 #include <QtCore/QFile>
 #include <QtCore/QRegularExpression>
@@ -143,13 +144,15 @@ private:
 
 };
 
-DcOptions::DcOptions(Environment environment)
-: _environment(environment) {
+    DcOptions::DcOptions(Environment environment, int port)
+: _environment(environment)
+, _port(port) {
 	constructFromBuiltIn();
 }
 
 DcOptions::DcOptions(const DcOptions &other)
 : _environment(other._environment)
+, _port(other._port)
 , _data(other._data)
 , _cdnDcIds(other._cdnDcIds)
 , _publicKeys(other._publicKeys)
@@ -202,11 +205,11 @@ void DcOptions::constructFromBuiltIn() {
 		: gsl::make_span(kBuiltInDcs).subspan(0);
 	for (const auto &entry : list) {
 		const auto flags = Flag::f_static | 0;
-		applyOneGuarded(entry.id, flags, entry.ip, entry.port, {});
+		applyOneGuarded(entry.id, flags, entry.ip, _port, {});
 		DEBUG_LOG(("MTP Info: adding built in DC %1 connect option: %2:%3"
 			).arg(entry.id
-			).arg(entry.ip
-			).arg(entry.port));
+            ).arg(entry.ip
+			).arg(_port));
 	}
 
 	// const auto listv6 = isTestMode()
@@ -417,7 +420,7 @@ std::vector<DcId> DcOptions::CountOptionsDifference(
 QByteArray DcOptions::serialize() const {
 	if (_immutable) {
 		// Don't write the overriden options to our settings.
-		return DcOptions(_environment).serialize();
+		return DcOptions(_environment, 0).serialize();
 	}
 
 	ReadLocker lock(this);

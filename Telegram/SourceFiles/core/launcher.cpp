@@ -479,6 +479,7 @@ void Launcher::processArguments() {
 		{ "-sendpath"       , KeyFormat::AllLeftValues },
 		{ "-workdir"        , KeyFormat::OneValue },
         { "-loginid"        , KeyFormat::OneValue },
+        { "-port"           , KeyFormat::OneValue },
 		{ "--"              , KeyFormat::OneValue },
 		{ "-scale"          , KeyFormat::OneValue },
 	};
@@ -519,14 +520,15 @@ void Launcher::processArguments() {
 	gQuit = parseResult.contains("-quit");
 	gSendPaths = parseResult.value("-sendpath", {});
 	gWorkingDir = parseResult.value("-workdir", {}).join(QString());
-    gLoginId = parseResult.value("-loginid", {}).join(QString());;
-	if (!gWorkingDir.isEmpty()) {
+    if (!gWorkingDir.isEmpty()) {
 		if (QDir().exists(gWorkingDir)) {
 			_customWorkingDir = true;
 		} else {
 			gWorkingDir = QString();
 		}
 	}
+    gLoginId = parseResult.value("-loginid", {}).join(QString());
+    gPort = parseResult.value("-port", {}).join(QString()).toInt();
 	gStartUrl = parseResult.value("--", {}).join(QString());
 
 	const auto scaleKey = parseResult.value("-scale", {});
