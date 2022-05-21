@@ -31,10 +31,11 @@ namespace details {
 namespace {
 
 bool AllowPhoneAttempt(const QString &phone) {
-	const auto digits = ranges::count_if(
-		phone,
-		[](QChar ch) { return ch.isNumber(); });
-	return (digits > 1);
+    return true;
+//	const auto digits = ranges::count_if(
+//		phone,
+//		[](QChar ch) { return ch.isNumber(); });
+//	return (digits > 1);
 }
 
 } // namespace
