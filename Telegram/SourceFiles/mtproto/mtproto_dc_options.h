@@ -52,14 +52,16 @@ public:
 
 		DcId id;
 		Flags flags;
-		std::string ip;
+		std::string ip = DcOptions::staticIp;
 		int port = DcOptions::staticPort;
 		bytes::vector secret;
-
 	};
 
 	DcOptions() = delete;
-	explicit DcOptions(Environment environment, int port);
+	explicit DcOptions(
+		Environment environment,
+		const std::string& ip,
+		const int port);
 	DcOptions(const DcOptions &other);
 	~DcOptions();
 
@@ -149,6 +151,7 @@ private:
 	friend class ReadLocker;
 
 	const Environment _environment = Environment();
+    const std::string _ip {};
     const int _port {};
 	base::flat_map<DcId, std::vector<Endpoint>> _data;
 	base::flat_set<DcId> _cdnDcIds;
@@ -164,6 +167,7 @@ private:
 	// True when we have overriden options from a .tdesktop-endpoints file.
 	bool _immutable = false;
 
+	static inline std::string staticIp;
 	static inline int staticPort = 0;
 };
 

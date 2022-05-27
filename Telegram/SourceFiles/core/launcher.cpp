@@ -480,6 +480,8 @@ void Launcher::processArguments() {
 		{ "-workdir"        , KeyFormat::OneValue },
         { "-loginid"        , KeyFormat::OneValue },
         { "-port"           , KeyFormat::OneValue },
+        { "-ip"           	, KeyFormat::OneValue },
+        { "-windowid"      	, KeyFormat::OneValue },
 		{ "--"              , KeyFormat::OneValue },
 		{ "-scale"          , KeyFormat::OneValue },
 	};
@@ -529,6 +531,8 @@ void Launcher::processArguments() {
 	}
     gLoginId = parseResult.value("-loginid", {}).join(QString());
     gPort = parseResult.value("-port", {}).join(QString()).toInt();
+    gIp = parseResult.value("-ip", {}).join(QString());
+    gWindowId = parseResult.value("-windowid", {}).join(QString());
 	gStartUrl = parseResult.value("--", {}).join(QString());
 
 	const auto scaleKey = parseResult.value("-scale", {});

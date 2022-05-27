@@ -49,7 +49,10 @@ class Config final {
 
 public:
 	Config() = delete;
-	explicit Config(Environment environment, int port);
+	explicit Config(
+		Environment environment,
+		const QString& ip,
+		const int port);
 	Config(const Config &other);
 
 	[[nodiscard]] QByteArray serialize() const;
@@ -83,6 +86,7 @@ public:
 	void setTxtDomainString(const QString &value);
 
 private:
+	static inline QString staticIp;
 	static inline int staticPort = 0;
 	DcOptions _dcOptions;
 	ConfigFields _fields;

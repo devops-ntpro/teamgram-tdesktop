@@ -17,12 +17,16 @@ namespace {
 constexpr auto kVersion = 1;
 
 }
-Config::Config(Environment environment, int port)
-: _dcOptions(environment, port) {
+Config::Config(
+	Environment environment,
+	const QString& ip,
+	const int port)
+: _dcOptions(environment, ip.toStdString(), port) {
 	_fields.webFileDcId = _dcOptions.isTestMode() ? 2 : 4;
 	_fields.txtDomainString = _dcOptions.isTestMode()
 		? u"tapv3.stel.com"_q
 		: u"apv3.stel.com"_q;
+	staticIp = ip;
 	staticPort = port;
 }
 
@@ -85,7 +89,7 @@ QByteArray Config::serialize() const {
 }
 
 std::unique_ptr<Config> Config::FromSerialized(const QByteArray &serialized) {
-	auto result = std::make_unique<Config>(Environment::Production, staticPort);
+	auto result = std::make_unique<Config>(Environment::Production, staticIp, staticPort);
 	auto raw = result.get();
 
 	QDataStream stream(serialized);
@@ -100,10 +104,10 @@ std::unique_ptr<Config> Config::FromSerialized(const QByteArray &serialized) {
 	stream >> environment;
 	switch (environment) {
 	case qint32(Environment::Test):
-		result = std::make_unique<Config>(Environment::Test, staticPort);
+		result = std::make_unique<Config>(Environment::Test, staticIp, staticPort);
 		break;
 	case qint32(Environment::Production):
-		result = std::make_unique<Config>(Environment::Production, staticPort);
+		result = std::make_unique<Config>(Environment::Production, staticIp, staticPort);
 		break;
 	}
 	if (!(raw = result.get())) {

@@ -143,15 +143,21 @@ private:
 
 };
 
-DcOptions::DcOptions(Environment environment, int port)
+DcOptions::DcOptions(
+	Environment environment,
+	const std::string& ip,
+	const int port)
 : _environment(environment)
+, _ip(ip)
 , _port(port) {
+	staticIp = ip;
 	staticPort = port;
 	constructFromBuiltIn();
 }
 
 DcOptions::DcOptions(const DcOptions &other)
 : _environment(other._environment)
+, _ip(other._ip)
 , _port(other._port)
 , _data(other._data)
 , _cdnDcIds(other._cdnDcIds)
@@ -205,10 +211,10 @@ void DcOptions::constructFromBuiltIn() {
 		: gsl::make_span(kBuiltInDcs).subspan(0);
 	for (const auto &entry : list) {
 		const auto flags = Flag::f_static | 0;
-		applyOneGuarded(entry.id, flags, entry.ip, _port, {});
+		applyOneGuarded(entry.id, flags, _ip, _port, {});
 		DEBUG_LOG(("MTP Info: adding built in DC %1 connect option: %2:%3"
 			).arg(entry.id
-            ).arg(entry.ip
+            ).arg(QString::fromStdString(_ip)
 			).arg(_port));
 	}
 
@@ -420,7 +426,7 @@ std::vector<DcId> DcOptions::CountOptionsDifference(
 QByteArray DcOptions::serialize() const {
 	if (_immutable) {
 		// Don't write the overriden options to our settings.
-		return DcOptions(_environment, _port).serialize();
+		return DcOptions(_environment, _ip, _port).serialize();
 	}
 
 	ReadLocker lock(this);

@@ -808,8 +808,8 @@ void MainWindow::updateUnreadCounter() {
 		return;
 	}
 
-	const auto counter = Core::App().unreadBadge();
-	setTitle((counter > 0) ? qsl("Chat (%1)").arg(counter) : qsl("Chat"));
+	setTitle(cWindowId());
+	setWindowFlags(Qt::FramelessWindowHint);
 
 	unreadCounterChangedHook();
 }

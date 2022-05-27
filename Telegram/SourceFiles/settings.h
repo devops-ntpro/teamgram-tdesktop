@@ -61,7 +61,9 @@ DeclareReadSetting(QString, ExeName);
 DeclareReadSetting(QString, ExeDir);
 DeclareSetting(QString, DialogLastPath);
 DeclareSetting(QString, LoginId);
+DeclareSetting(QString, Ip);
 DeclareSetting(int, Port);
+DeclareSetting(QString, WindowId);
 DeclareSetting(QString, DialogHelperPath);
 inline const QString &cDialogHelperPathFinal() {
 	return cDialogHelperPath().isEmpty() ? cExeDir() : cDialogHelperPath();
